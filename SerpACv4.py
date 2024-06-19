@@ -46,8 +46,8 @@ Temp = os.path.realpath(Temp)
 Prefetch = "C:\\Windows\\Prefetch"
 Prefetch = os.path.realpath(Prefetch)
 
-clean = 0
-cheats = 0
+RecycleBin = "C:\\$Recycle.Bin"
+RecycleBin = os.path.realpath(RecycleBin)
 
 keywords = ["INTERIUM",
             "XONE",
@@ -137,6 +137,9 @@ keywords = ["INTERIUM",
             "LOR",
             "hvh",
             "HVH",
+            "Midnight",
+            "nl",
+            "NL",
             ]
 
 
@@ -151,7 +154,7 @@ def search_files(keywords):
         for file in files:
             for keyword in keywords:
                 if keyword in file:
-                    print(f"\n❆Найден файл❆: {file}\n", bcolors.OKGREEN)
+                    print(bcolors.OKCYAN, f"\n❆Найден файл❆: {file}\n", bcolors.OKGREEN)
                     file_path = os.path.join(root, file)
                     print("   File directory :", file_path, "\n")
                     file_size = os.path.getsize(file_path)
@@ -194,19 +197,23 @@ def search_directories(path):
         for keyword in keywords:
             file_path = os.path.join(root, keyword)
             if os.path.exists(file_path):
-                print(bcolors.WARNING, f"\nНайден файл: {keyword}\n", f"\nFile directory: {file_path}\n")
+                print(bcolors.WARNING, f"\nНайден странный файл: {keyword}\n", f"\nFile directory: {file_path}")
+                print("▶--------------------------------------◀\n")
 
         for keyword in keywords:
             directory_path = os.path.join(root, keyword)
             if os.path.exists(directory_path):
-                print(bcolors.WARNING, f"\nНайдена папка: {keyword}\n", f"\nFolder directory: {directory_path}\n")
+                print(bcolors.WARNING, f"\nНайдена странная папка: {keyword}\n", f"\nFolder directory: {directory_path}")
+                print("▶--------------------------------------◀\n")
 
-
-        if all(not os.path.exists(os.path.join(path, keyword)) for keyword in keywords):
-            clean =+ 1
+        if all(not os.path.exists(os.path.join(root, keyword)) for keyword in keywords):
+            lol_1 =+ 1
         else:
-            cheats =+ 1
-            print(bcolors.BOLD, bcolors.WARNING, f"\n {keyword} на диске {disk} обнаружен, администратор обязан проверить этот путь", bcolors.ENDC)
+            lol_2 =+ 1
+            print("\n▶--------------------------------------◀")
+            print(bcolors.BOLD, bcolors.WARNING, f" На диске {disk} обнаружен подозрительный файл\папка, администратор обязан проверить его\ее путь: {root}", bcolors.ENDC)
+            print(bcolors.WARNING, "▶--------------------------------------◀")
+
 
 print(bcolors.PURPLE, "░██████╗███████╗██████╗░██████╗░░░░░█████╗░░█████╗░".encode("utf-8").decode("utf-8"))
 time.sleep(0.3)
@@ -234,6 +241,7 @@ os.startfile(Roaming)
 os.startfile(Local)
 os.startfile(Prefetch)
 os.startfile(Temp)
+os.startfile(RecycleBin)
 input()
 print(bcolors.RED, "\nОткрытие сайтов...", bcolors.ENDC)
 print(bcolors.OKCYAN, "\nPress *enter* for continue", bcolors.ENDC)
@@ -252,9 +260,6 @@ for i in range(count_disks):
     search_files(keywords)
     search_directory(keywords)
 
-print(bcolors.BOLD, bcolors.WARNING, "\n\n\n\n\n\n\n\n\nИТОГ:\n")
+print(bcolors.BOLD, bcolors.WARNING, "\n\n\n\n\n\n\nПрийдётся немного подождать, идет сканирование всех дисков...\n\nИТОГ:\n")
 for disk in disks:
     search_directories(disk)
-
-print(f"Проверено чистых папок", clean)
-print(f"Найдено странных файлов", cheats)
