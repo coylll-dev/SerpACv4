@@ -3,6 +3,7 @@ from pathlib import Path
 import webbrowser
 import pathlib
 import time
+import keyboard
 
 
 class bcolors:
@@ -37,9 +38,6 @@ Disk_C = os.path.realpath(Disk_C)
 Local = Path(os.environ["USERPROFILE"]) / "AppData\\Local"
 Local = os.path.realpath(Local)
 
-LocalLow = Path(os.environ["USERPROFILE"]) / "AppData\\LocalLow"
-LocalLow = os.path.realpath(LocalLow)
-
 Temp = "C:\\Windows\\Temp"
 Temp = os.path.realpath(Temp)
 
@@ -49,7 +47,17 @@ Prefetch = os.path.realpath(Prefetch)
 RecycleBin = "C:\\$Recycle.Bin"
 RecycleBin = os.path.realpath(RecycleBin)
 
-keywords = ["INTERIUM",
+ProgramFiles = "C:\\Program Files"
+ProgramFiles = os.path.realpath(ProgramFiles)
+
+ProgramFilesX86 = "C:\\Program Files (x86)"
+ProgramFilesX86 = os.path.realpath(ProgramFilesX86)
+
+Downloads = Path(os.environ["USERPROFILE"]) / "Downloads"
+Downloads = os.path.realpath(Downloads)
+
+keywords = [
+			"INTERIUM",
             "XONE",
             "xone",
             "Luno",
@@ -107,11 +115,11 @@ keywords = ["INTERIUM",
             "Antropomeda",
             "S0ul",
             "1LT",
+            "PornHub",
             "SYNCWARE",
             "Aquila",
             "Easywin",
             "Ampetamine",
-            "S0ul",
             "Nova",
             "MillionWare",
             "Kernel",
@@ -146,7 +154,33 @@ keywords = ["INTERIUM",
 def tt(text, delay):
     for i in text:
         print(end=i)
-        time.sleep(delay)
+        time.sleep(delay)		
+	
+
+def folders():
+	os.startfile(Disk_C)
+	os.startfile(Roaming)
+	os.startfile(Local)
+	os.startfile(Prefetch)
+	os.startfile(Temp)
+	os.startfile(RecycleBin)
+	os.startfile(ProgramFiles)
+	os.startfile(ProgramFilesX86)
+	os.startfile(Downloads)
+
+
+#Открывает сайты читов
+def history():
+	print(bcolors.RED, "\nОткрытие сайтов...", bcolors.ENDC)
+	print(bcolors.OKCYAN, "\nPress *enter* for continue", bcolors.ENDC)
+	webbrowser.open('https://midnight.im/', new=2)
+	webbrowser.open('https://xone.fun/', new=2)
+	webbrowser.open('https://neverlose.cc/', new=2)
+	webbrowser.open('https://en1gma.tech/', new=2)
+	webbrowser.open('https://m.youtube.com/', new=2)
+	#Открытие истории
+	time.sleep(1)
+	keyboard.press_and_release('Ctrl+H')
 
 
 def search_files(keywords):
@@ -192,6 +226,43 @@ def search_directory(keyword):
 
                     print("\n▶--------------------------------------◀")
 
+
+def itog():
+    # Итог
+    print(bcolors.BOLD, bcolors.WARNING, "\n\n\n\n\n\n\nПрийдётся немного подождать, идёт сканирование всех дисков...\n\nИТОГ:\n")
+    global disk
+    for disk in disks:
+        search_directories(disk)
+
+
+#Выборы действий
+folders_say = "\n A - Открыть папки"
+history_say = "B - Открыть сайты читов и историю"
+find_say = "C - Начать проверку всех файлов на читы"
+exit_say = "D - Выход (Нажимать после все действий)"
+
+#Меню
+def menu():
+    proverka = True 
+    while proverka:
+        print(bcolors.PURPLE, "\nВыберите действие:\n\n")
+        print(bcolors.PURPLE, folders_say)
+        print(bcolors.PURPLE, history_say)
+        print(bcolors.PURPLE, find_say)
+        print(bcolors.PURPLE, exit_say)
+        vibor = input("\nВведите вариант ответа английской раскладкой (Например: A)\n")
+        if vibor == "A":
+            folders()
+        elif vibor == "B":
+            history()
+        elif vibor == "C":
+            po_fanu()
+        elif vibor == "D":
+            proverka = False
+        else:
+            print("Такого выбора не существует...")
+
+
 def search_directories(path):
     for root, dirs, files in os.walk(path):
         for keyword in keywords:
@@ -210,9 +281,23 @@ def search_directories(path):
             lol_1 =+ 1
         else:
             lol_2 =+ 1
-            print("\n▶--------------------------------------◀")
+            print("\n ▶--------------------------------------◀")
             print(bcolors.BOLD, bcolors.WARNING, f" На диске {disk} обнаружен подозрительный файл\папка, администратор обязан проверить его\ее путь: {root}", bcolors.ENDC)
             print(bcolors.WARNING, "▶--------------------------------------◀")
+
+
+def po_fanu():
+    # Проверяет диски на файлы похожие по названиям на читы
+    for i in range(count_disks):
+        disks_print = print(bcolors.OKGREEN, "Ваши диски: ", disks)
+        disk_choice = input("Введите букву диска, на котором нужно выполнить поиск (например, C): ")
+        disk_path = disk_choice + ":\\"
+        global path
+        path = disk_path
+        print("\nПоиск папок и файлов...")
+        print(bcolors.OKCYAN, "\nPress *enter* for continue", bcolors.ENDC)
+        search_files(keywords)
+        search_directory(keywords)
 
 
 print(bcolors.PURPLE, "░██████╗███████╗██████╗░██████╗░░░░░█████╗░░█████╗░".encode("utf-8").decode("utf-8"))
@@ -234,32 +319,8 @@ time.sleep(1)
 print("\n   ☭ For server Aztec")
 time.sleep(1)
 tt("...", 0.5)
-print(bcolors.WARNING, "\n\nОткрытие папок...", bcolors.ENDC)
-print(bcolors.OKCYAN, "\nPress *enter* for continue", bcolors.ENDC)
-os.startfile(Disk_C)
-os.startfile(Roaming)
-os.startfile(Local)
-os.startfile(Prefetch)
-os.startfile(Temp)
-os.startfile(RecycleBin)
-input()
-print(bcolors.RED, "\nОткрытие сайтов...", bcolors.ENDC)
-print(bcolors.OKCYAN, "\nPress *enter* for continue", bcolors.ENDC)
-webbrowser.open('https://midnight.im/', new=2)
-webbrowser.open('https://xone.fun/', new=2)
-webbrowser.open('https://neverlose.cc/', new=2)
-webbrowser.open('https://en1gma.tech/', new=2)
-input()
-for i in range(count_disks):
-    disks_print = print(bcolors.OKGREEN, "Ваши диски: ", disks)
-    disk_choice = input("Введите букву диска, на котором нужно выполнить поиск (например, C): ")
-    disk_path = disk_choice + ":\\"
-    path = disk_path
-    print("\nПоиск папок и файлов...")
-    print(bcolors.OKCYAN, "\nPress *enter* for continue", bcolors.ENDC)
-    search_files(keywords)
-    search_directory(keywords)
 
-print(bcolors.BOLD, bcolors.WARNING, "\n\n\n\n\n\n\nПрийдётся немного подождать, идет сканирование всех дисков...\n\nИТОГ:\n")
-for disk in disks:
-    search_directories(disk)
+
+menu()  # Add colon
+#Выход из цикла
+itog()
