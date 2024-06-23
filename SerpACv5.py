@@ -250,6 +250,7 @@ def menu():
         print(bcolors.PURPLE, history_say)
         print(bcolors.PURPLE, find_say)
         print(bcolors.PURPLE, exit_say)
+        print(bcolors.PURPLE, "\nВсе варианты лучше вводить по очереди!")
         vibor = input("\nВведите вариант ответа английской раскладкой (Например: A)\n")
         if vibor == "A":
             folders()
